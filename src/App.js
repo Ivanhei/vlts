@@ -1,14 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import { Component } from 'react';
+class App extends Component {
+render(){
   return (
-    <div className="App">
-      {questionList.map((question, i) => 
-      <Question {...question} index={i}/>
-      )}
-    </div>
+         <div className="App">
+            .......
+            .......
+         </div>
   );
+ }
 }
 
 
@@ -104,7 +106,7 @@ const questionList = [
     type: questionTypes.LVLT_1000,
     audioSrc: "audio/1k/far.mp3",
     options: ["很長一段時間", "很快地", "遠的", "到你的家"],
-  }/*,
+  },
   {
     type: questionTypes.LVLT_1000,
     audioSrc: "audio/1k/game.mp3",
@@ -164,7 +166,7 @@ const questionList = [
     type: questionTypes.LVLT_1000,
     audioSrc: "audio/1k/round.mp3",
     options: ["友善的", "很大的", "很快的", "圓的"],
-  }*/,
+  },
   {
     type: questionTypes.LVLT_2000,
     audioSrc: "audio/2k/maintain.mp3",
@@ -224,7 +226,7 @@ const questionList = [
     type: questionTypes.LVLT_2000,
     audioSrc: "audio/2k/resist.mp3",
     options: ["修理", "仔細檢查", "仔細考慮", "抗拒"],
-  }/*,
+  },
   {
     type: questionTypes.LVLT_2000,
     audioSrc: "audio/2k/lend.mp3",
@@ -359,7 +361,7 @@ const questionList = [
     type: questionTypes.LVLT_AWL,
     audioSrc: "audio/AWL/colleague.mp3",
     options: ["主題", "時間表", "同事", "論文"],
-  }/*,
+  },
   {
     type: questionTypes.LVLT_AWL,
     audioSrc: "audio/AWL/legal.mp3",
@@ -439,7 +441,7 @@ const questionList = [
     type: questionTypes.VLT,
     readingText: "",
     options: ["", "", "", ""],
-  }*/
+  }
 ]
 
 /**
@@ -453,14 +455,16 @@ const questionList = [
  * 
  * @return JSX.Element
  */
+
+/*
 function Question(questionProp) {
   const questionIndex = (questionProp.index + 1)
   return (
     <div style={{marginBottom: "1em"}}>
       Q{questionIndex}. 
-      {/* <p>
+      { <p>
         {questionProp.type.instruction}
-      </p> */}
+      </p> } 
       <audio controls src={questionProp.audioSrc}/>
 
       <div>
@@ -472,5 +476,7 @@ function Question(questionProp) {
     </div>
   )
 }
+        {questionList.map((question, i) => <Question {...question} index={i}/>)}
+*/
 
 export default App;
