@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.Quiz_render_container{
+  color: #61dafb;
+}
+
+.Quiz_container_display{
+  color: #61dafb;
+}

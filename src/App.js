@@ -5,10 +5,15 @@ import { Component } from 'react';
 class App extends Component {
 render(){
   return (
-         <div className="App">
-            .......
-            .......
-         </div>
+    <div className="App">
+      <div className="Quiz_render_container">
+        <div className="Quiz_container_display">
+          <form>
+            <input type="radio" name="temp" value="temp" />
+          </form>
+        </div>
+    </div>
+    </div>
   );
  }
 }
@@ -286,7 +291,7 @@ const questionList = [
     type: questionTypes.LVLT_2000,
     audioSrc: "audio/2k/reserve.mp3",
     options: ["庫存", "烤箱", "負債", "受雇者"],
-  }*/,
+  },
   {
     type: questionTypes.LVLT_AWL,
     audioSrc: "audio/AWL/concept.mp3",
