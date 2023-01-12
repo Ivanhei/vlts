@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 import './App.css';
-import { Component } from "react";
+import { Component, createRef } from "react";
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 //import Replay from '@material-ui/icons/Replay';
@@ -32,6 +32,7 @@ const analytics = getAnalytics(app);
 class App extends Component {
   constructor(props){
     super(props)
+    this.questionAudio = createRef();
     this.state = {
       activeStep:0,
       questionList : questionList,
@@ -85,7 +86,7 @@ class App extends Component {
         }
       })
     })
-    if(notattempcount<=(questionList.length * questionList.options.length) && notattempcount>(questionList.length * (questionList.options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
+    if(notattempcount<=(list.length * list.options.length) && notattempcount>(list.length * (list.options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
       this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true})
     }else{
       this.setState({Total:count})
@@ -100,16 +101,12 @@ class App extends Component {
           autoHideDuration={5000}  
           onClose={this.handleClose} 
           style={{marginTop:'0px',width:'100%'}}>
-            <MuiAlert 
-              elevation={6} 
-              variant="filled" 
-              onClose={this.handleClose} 
-              severity={this.state.errormsg} > {this.state.catchmsg}
-          </MuiAlert>
+            <MuiAlert elevation={6} variant="filled" onClose={this.handleClose} severity={this.state.errormsg}> {this.state.catchmsg} </MuiAlert>
         </Snackbar> 
       : null
     )
   }
+
   render(){
     return (
       <div className="App">
@@ -121,23 +118,30 @@ class App extends Component {
                 return (
                   <div>
                     {item.type.instruction}
+                    {/* <AudioControl src={item.audioSrc}/> */}
+                    <audio ref={this.questionAudio} src={item.audioSrc}/>
+                    {this.questionAudio.current?.paused ? <button onClick={() => {
+                      this.questionAudio.current.pause()
+                    }}>Pause</button> : <button onClick={() => {
+                      this.questionAudio.current.play()
+                    }}>Play</button>}
                     <div> Options are : </div>
                       {item.options.map((ans,index_ans)=>{
-                          index_ans = index_ans + 1
-                            return (
-                                <div key = {index_ans} className="Quiz_multiple_options">
-                                <input
-                                  key={index_ans}
-                                  type="radio"
-                                  name={item.question_number}
-                                  value={ans.que_options}
-                                  checked={!!ans.selected}
-                                  onChange={this.onInputChange} />
-                                  {index_ans}) {ans.que_options}
-                                </div>
-                            )
-                        })}
-                    </div>
+                        index_ans = index_ans + 1
+                          return (
+                            <div key = {index_ans} className="Quiz_multiple_options">
+                            <input
+                              key={index_ans}
+                              type="radio"
+                              name={item.question_number}
+                              value={ans.que_options}
+                              checked={!!ans.selected}
+                              onChange={this.onInputChange} />
+                              {index_ans}) {ans.que_options}
+                            </div>
+                          )
+                      })}
+                  </div>
                 )
               }else{
                 return null
@@ -159,6 +163,19 @@ class App extends Component {
     );
   }
 }
+
+// function AudioControl(props) {
+
+
+//   return <>
+//     <audio ref={this.questionAudio} src={props.src}/>
+//     {this.questionAudio.current?.paused ? <button onClick={() => {
+//       this.questionAudio.current.pause()
+//     }}>Pause</button> : <button onClick={() => {
+//       this.questionAudio.current.play()
+//     }}>Play</button>}
+//   </>
+// }
 
 
 const questionTypes = {
