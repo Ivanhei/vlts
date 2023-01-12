@@ -6,11 +6,41 @@ import Button from '@material-ui/core/Button';
 //import Replay from '@material-ui/icons/Replay';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from "@material-ui/lab/Alert";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAGfbT6UCafFI-78G-0KU_3liczlPOtZIQ",
+  authDomain: "vlts-93d00.firebaseapp.com",
+  projectId: "vlts-93d00",
+  storageBucket: "vlts-93d00.appspot.com",
+  messagingSenderId: "649465830666",
+  appId: "1:649465830666:web:3713367359855e5e09eef3",
+  measurementId: "G-ECZMPRS3DM"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+
+
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
+      activeStep:0,
       questionList : questionList,
+      booleanonsubmit : false,
+      Total:0,
+      open:false,
+      catchmsg:"",
+      errormsg:""
     }
   }
 
@@ -40,9 +70,9 @@ class App extends Component {
     })
     this.setState({ questionList: nexState })
   }
-  
+
   onsubmit = () =>{
-    let list = this.state.Quiz_Set ;
+    let list = this.state.questionList ;
     let count = 0;
     let notattempcount = 0;
       list.map((item,key)=>{
@@ -56,7 +86,7 @@ class App extends Component {
           }
         })
       })
-    if(notattempcount<=24 && notattempcount>16){ //depends on option list
+    if(notattempcount<=(questionList.length * questionList.options.length) && notattempcount>(questionList.length * (questionList.options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
       this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true})
     }else{
       this.setState({Total:count})
@@ -119,10 +149,10 @@ class App extends Component {
         <div className="Quiz-MobileStepper">
           <MobileStepper  
               variant="dots" 
-              steps={this.state.Quiz_Set.length} 
+              steps={this.state.questionList.length} 
               position="static" 
               activeStep={this.state. activeStep }  
-              nextButton={ this.state.activeStep === 7 ?
+              nextButton={ this.state.activeStep === (questionList.length - 1) ?
                           <Button size="small" onClick={this.onsubmit}> 
                               Submit 
                           </Button> 
@@ -130,7 +160,7 @@ class App extends Component {
                           <Button size="small" 
                             onClick={this.handleNext} 
                             disabled={this.state.activeStep ===
-                            this.state.Quiz_Set.length}>
+                            this.state.questionList.length}>
                               Next
                           </Button>
                         }
