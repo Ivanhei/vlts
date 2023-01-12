@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 import './App.css';
-import { Component, createRef } from "react";
+import { Component, createRef, useRef, useState, useEffect } from "react";
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 //import Replay from '@material-ui/icons/Replay';
@@ -117,14 +117,8 @@ class App extends Component {
               {
                 return (
                   <div>
-                    {item.type.instruction}
-                    {/* <AudioControl src={item.audioSrc}/> */}
-                    <audio ref={this.questionAudio} src={item.audioSrc}/>
-                    {this.questionAudio.current?.paused ? <button onClick={() => {
-                      this.questionAudio.current.pause()
-                    }}>Pause</button> : <button onClick={() => {
-                      this.questionAudio.current.play()
-                    }}>Play</button>}
+                    <div>{item.type.instruction}</div>
+                    <div><AudioControl src={item.audioSrc}/></div>
                     <div> Options are : </div>
                       {item.options.map((ans,index_ans)=>{
                         index_ans = index_ans + 1
@@ -164,19 +158,26 @@ class App extends Component {
   }
 }
 
-// function AudioControl(props) {
+function AudioControl(props) {
+  const audioRef = useRef()
+  const [audioPlaying, setAudioPlaying] = useState(false)
 
+  useEffect(() => {
+    const audioEl = audioRef.current
 
-//   return <>
-//     <audio ref={this.questionAudio} src={props.src}/>
-//     {this.questionAudio.current?.paused ? <button onClick={() => {
-//       this.questionAudio.current.pause()
-//     }}>Pause</button> : <button onClick={() => {
-//       this.questionAudio.current.play()
-//     }}>Play</button>}
-//   </>
-// }
+    if (audioPlaying) 
+      audioEl.play()
+    else 
+      audioEl.pause()
+  }, [audioRef, audioPlaying])
 
+  return <>
+    <audio ref={audioRef} src={props.src} /*controls*//>
+    {audioPlaying ? 
+      <button onClick={() => setAudioPlaying(false)}>Pause</button> : 
+      <button onClick={() => setAudioPlaying(true)}>Play</button>}
+  </>
+}
 
 const questionTypes = {
   "LVLT_Practice": {

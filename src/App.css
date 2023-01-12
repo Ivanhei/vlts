@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #2a2c2c;
 }
 
 @keyframes App-logo-spin {
@@ -38,9 +38,9 @@
 }
 
 .Quiz_render_container{
-  color: #61dafb;
+  color: #2a2c2c;
 }
 
 .Quiz_container_display{
-  color: #61dafb;
+  color: #2a2c2c;
 }
