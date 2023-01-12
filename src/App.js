@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import { Component } from "react";
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -27,7 +27,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 
 
 class App extends Component {
@@ -75,17 +74,17 @@ class App extends Component {
     let list = this.state.questionList ;
     let count = 0;
     let notattempcount = 0;
-      list.map((item,key)=>{
-        item.options.map((anslist,key)=>{
-          if(anslist.selected === true){  //for the selected item
-            if(anslist.que_options === item.ans){ //count++ if correct
-              count = count + 1;
-            }
-          }else{
-            notattempcount = notattempcount + 1
+    list.map((item,key)=>{
+      item.options.map((anslist,key)=>{
+        if(anslist.selected === true){  //for the selected item
+          if(anslist.que_options === item.ans){ //count++ if correct
+            count = count + 1;
           }
-        })
+        }else{
+          notattempcount = notattempcount + 1
+        }
       })
+    })
     if(notattempcount<=(questionList.length * questionList.options.length) && notattempcount>(questionList.length * (questionList.options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
       this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true})
     }else{
@@ -136,7 +135,7 @@ class App extends Component {
                                   onChange={this.onInputChange} />
                                   {index_ans}) {ans.que_options}
                                 </div>
-                              )
+                            )
                         })}
                     </div>
                 )
@@ -147,30 +146,13 @@ class App extends Component {
           </div>
         </div>
         <div className="Quiz-MobileStepper">
-          <MobileStepper  
-              variant="dots" 
-              steps={this.state.questionList.length} 
-              position="static" 
-              activeStep={this.state. activeStep }  
-              nextButton={ this.state.activeStep === (questionList.length - 1) ?
-                          <Button size="small" onClick={this.onsubmit}> 
-                              Submit 
-                          </Button> 
-                            :
-                          <Button size="small" 
-                            onClick={this.handleNext} 
-                            disabled={this.state.activeStep ===
-                            this.state.questionList.length}>
-                              Next
-                          </Button>
-                        }
-              backButton={ 
-                          <Button size="small" 
-                          onClick={this.handleBack} 
-                          disabled={this.state.activeStep === 0}> 
-                              Back 
-                          </Button>
-                          }
+          <MobileStepper variant="dots" steps={this.state.questionList.length} position="static" activeStep={this.state.activeStep}  
+            nextButton={this.state.activeStep === (questionList.length - 1) ?
+              <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
+                :
+              <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>Next</Button> //Next button
+            }
+            backButton={<Button size="small" onClick={this.handleBack} disabled={this.state.activeStep === 0}>Back</Button>} //Back button
             />
         </div>
       </div>
