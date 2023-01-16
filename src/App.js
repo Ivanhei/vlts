@@ -8,6 +8,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from "@material-ui/lab/Alert";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,14 +28,24 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
 
+const answerSheet = {
+  username: "",
+  // type: 
+  answers: [],
+  score: 0
+}
 
 class App extends Component {
+  
   constructor(props){
     super(props)
     this.questionAudio = createRef();
     this.state = {
-      activeStep:0,
+      userId: "",
+      activeStep:-1,
       questionList : questionList,
       booleanonsubmit : false,
       Total:0,
@@ -43,7 +54,7 @@ class App extends Component {
       errormsg:""
     }
   }
-
+  
   handleNext=()=>{
     this.setState({activeStep:this.state.activeStep+1})
   }
@@ -71,6 +82,11 @@ class App extends Component {
     this.setState({ questionList: nexState })
   }
 
+  onIDChange = (e) => {
+    this.setState({userId: e.target.value})
+    answerSheet.username = e.target.value
+  }
+  
   onsubmit = () =>{
     let list = this.state.questionList ;
     let count = 0;
@@ -86,10 +102,52 @@ class App extends Component {
         }
       })
     })
-    if(notattempcount<=(list.length * list.options.length) && notattempcount>(list.length * (list.options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
+    if(notattempcount<=(list.length * list[0].options.length) && notattempcount>(list.length * (list[0].options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
       this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true})
     }else{
       this.setState({Total:count})
+
+      /*
+      const answerSheet = {
+        username: string,
+        answers: [{
+          questionNumber: number,
+          value: string,
+          correct: boolean,
+        }, ...],
+        score: number,
+      }
+      */
+    
+      function abc(option) {
+        return option.selected
+      }
+
+      list.forEach((item,key)=>{
+        const answeredOption = item.options.filter(abc)[0]
+        if (answeredOption) {
+          const correct = item.ans === answeredOption.que_options
+          answerSheet.answers.push({
+            questionType: item.type,
+            questionNumber: item.question_number,
+            value: answeredOption.que_options,
+            correct: correct,
+          })
+          answerSheet.score += correct ? 1 : 0
+          console.log(answerSheet)
+        }
+        // [o1, o2, o3]    |     fun ^
+        //map
+        // [fun(o1), fun(o2), fun(o3)]
+      })
+
+      addDoc(collection(db, "answersheets"), answerSheet)
+        .then(docRef => {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(e => {
+          console.error("Error adding document: ", e);
+        })
     }
   }
 
@@ -108,49 +166,49 @@ class App extends Component {
   }
 
   render(){
+    const item = this.state.questionList[this.state.activeStep]
     return (
       <div className="App">
         <div className="Quiz_render_container">
           <div className="Quiz_container_display">
-            {this.state.questionList.map((item,index)=>{
-              if( Math.abs(this.state.activeStep - index)<=0)
-              {
-                return (
-                  <div>
-                    <div>{item.type.instruction}</div>
-                    <div><AudioControl src={item.audioSrc}/></div>
-                    <div> Options are : </div>
-                      {item.options.map((ans,index_ans)=>{
-                        index_ans = index_ans + 1
-                          return (
-                            <div key = {index_ans} className="Quiz_multiple_options">
-                            <input
-                              key={index_ans}
-                              type="radio"
-                              name={item.question_number}
-                              value={ans.que_options}
-                              checked={!!ans.selected}
-                              onChange={this.onInputChange} />
-                              {index_ans}) {ans.que_options}
-                            </div>
-                          )
-                      })}
-                  </div>
-                )
-              }else{
-                return null
-              }
-            })}
+            {this.state.activeStep < 0 ? 
+              <div>
+                <div>Please enter your ID:</div>
+                <input type="text" value={this.state.userId} onChange={this.onIDChange}/>
+              </div>
+             : 
+              <div>
+                <div>{item.type.instruction}</div>
+                {item.audioSrc ? <div><AudioControl src={item.audioSrc}/></div> : <></>}
+                {item.questionStatement ? <div>{item.questionStatement}</div> : <></>}
+                <div> Options are : </div>
+                  {item.options.map((ans,index_ans)=>{
+                    index_ans = index_ans + 1
+                      return (
+                        <div key = {index_ans} className="Quiz_multiple_options">
+                        <input
+                          key={index_ans}
+                          type="radio"
+                          name={item.question_number}
+                          value={ans.que_options}
+                          checked={!!ans.selected}
+                          onChange={this.onInputChange} />
+                          {index_ans}) {ans.que_options}
+                        </div>
+                      )
+                  })}
+              </div>
+            }
           </div>
         </div>
         <div className="Quiz-MobileStepper">
           <MobileStepper variant="dots" steps={this.state.questionList.length} position="static" activeStep={this.state.activeStep}  
-            nextButton={this.state.activeStep === (questionList.length - 1) ?
+            nextButton={this.state.activeStep === (this.state.questionList.length - 1) ?
               <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
                 :
               <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>Next</Button> //Next button
             }
-            backButton={<Button size="small" onClick={this.handleBack} disabled={this.state.activeStep === 0}>Back</Button>} //Back button
+            backButton={<Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>Back</Button>} //Back button
             />
         </div>
       </div>
