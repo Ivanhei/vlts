@@ -38,8 +38,9 @@ const answerSheet = {
   score: 0
 }
 
-const COLOR_NOT_ANSWERED = "#aaa"
-const COLOR_ANSWERED = "#0c0"
+const COLOR_NOT_ANSWERED = "#ccc"
+const COLOR_NOT_ANSWERED_CLICKABLE = "#ff7676"
+const COLOR_ANSWERED = "#4de780"
 const COLOR_SELECTED = "#3f51b5"
 
 class App extends Component {
@@ -80,7 +81,7 @@ class App extends Component {
     if (reason === 'clickaway') {
       return;
     }
-    this.setState({open : false, notAnsweredIndicationColor: COLOR_NOT_ANSWERED})
+    this.setState({open : false})
   }
 
   onInputChange = (e) => {
@@ -117,7 +118,7 @@ class App extends Component {
     })
     if(notattempcount<=(list.length * list[0].options.length) && notattempcount>(list.length * (list[0].options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
       console.log("Popping up, wait for me please!")
-      this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true, notAnsweredIndicationColor: "#e00"})
+      this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true, notAnsweredIndicationColor: COLOR_NOT_ANSWERED_CLICKABLE})
     }else{
       console.log("Sending to server 🫡")
       this.setState({Total:count})
@@ -185,12 +186,43 @@ class App extends Component {
     return (
       <div className="App">
         {this.Snackbarrender()}
+        <div className="Quiz-MobileStepper">
+          <MobileStepper variant="dots" steps={0} // steps={this.state.activeStep < 0 ? 0 : this.state.questionList.length} 
+          position="static" activeStep={this.state.activeStep}  
+            nextButton={this.state.activeStep === (this.state.questionList.length - 1) ?
+              <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
+                :
+              <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>Next</Button> //Next button
+            }
+            backButton={<Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>Back</Button>} //Back button
+            style={{background: "none"}}
+            />
+
+          <div>
+            {this.state.activeStep < 0 ? null : <div style={{textAlign: "center"}} className="flex mx-4">
+              {this.state.questionList.map((item, index) => <div style={{
+                backgroundColor: 
+                  this.state.activeStep === index ? COLOR_SELECTED : // check if it is current question
+                    item.options.filter(option => option.selected).length > 0 ? COLOR_ANSWERED : this.state.notAnsweredIndicationColor, // if the question is answered, green, if not, grey.
+                height: "1em",
+                color: "#fff",
+                cursor: "pointer",
+                display: "inline-block",
+                transition: "0.2s",
+              }}
+              className="flex-grow"
+              onClick={() => this.setState({activeStep: index})}>
+                {/* {index + 1} */}
+              </div>)}
+            </div>}
+          </div>
+        </div>
         <div className="Quiz_render_container">
-          <div className="Quiz_container_display">
+          <div className="Quiz_container_display mx-5 my-3">
             {this.state.activeStep < 0 ? 
-              <div>
+              <div className="mx-32 my-20">
                 <div>Please enter your ID:</div>
-                <input type="text" value={this.state.userId} onChange={this.onIDChange}/>
+                <input type="text" value={this.state.userId} onChange={this.onIDChange} className="border-2 border-black"/>
               </div>
              : 
               <div>
@@ -215,37 +247,6 @@ class App extends Component {
                   })}
               </div>
             }
-          </div>
-        </div>
-        <div className="Quiz-MobileStepper">
-          <MobileStepper variant="dots" steps={this.state.activeStep < 0 ? 0 : this.state.questionList.length} position="static" activeStep={this.state.activeStep}  
-            nextButton={this.state.activeStep === (this.state.questionList.length - 1) ?
-              <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
-                :
-              <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>Next</Button> //Next button
-            }
-            backButton={<Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>Back</Button>} //Back button
-            />
-
-          <div>
-            {this.state.activeStep < 0 ? null : <div style={{textAlign: "center"}}>
-              {this.state.questionList.map((item, index) => <div style={{
-                backgroundColor: 
-                  this.state.activeStep === index ? COLOR_SELECTED : // check if it is current question
-                    item.options.filter(option => option.selected).length > 0 ? COLOR_ANSWERED : this.state.notAnsweredIndicationColor, // if the question is answered, green, if not, grey.
-                    width: "1.5em",
-                    height: "1.5em",
-                    lineHeight: "1.5em",
-                    textAlign: "center",
-                    color: "#fff",
-                    cursor: "pointer",
-                    display: "inline-block",
-                    margin: "0.5em 0.25em",
-                    borderRadius: "50%",
-              }} onClick={() => this.setState({activeStep: index})}>
-                {index + 1}
-              </div>)}
-            </div>}
           </div>
         </div>
       </div>
@@ -345,7 +346,7 @@ const questionList = [
     audioSrc: "vlts/audio/1k/jump.mp3",
     options: [{que_options : "漂浮" , selected: false}, {que_options : "跳躍" , selected: false}, {que_options : "停車" , selected: false}, {que_options : "跑步" , selected: false}],
     ans: "跳躍"
-  }/*,
+  },
   {
     question_number: "6",
     type: questionTypes.LVLT_1000,
@@ -861,7 +862,7 @@ const questionList = [
     type: questionTypes.VLT,
     readingText: "",
     options: ["", "", "", ""],
-  }*/
+  }
 ]
 
 /**

@@ -3,6 +3,9 @@
   "name": "vlts",
   "version": "0.1.0",
   "private": true,
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  },
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/lab": "^4.0.0-alpha.61",
