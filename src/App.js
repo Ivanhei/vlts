@@ -38,6 +38,10 @@ const answerSheet = {
   score: 0
 }
 
+const COLOR_NOT_ANSWERED = "#aaa"
+const COLOR_ANSWERED = "#0c0"
+const COLOR_SELECTED = "#3f51b5"
+
 class App extends Component {
   
   constructor(props){
@@ -51,12 +55,21 @@ class App extends Component {
       Total:0,
       open:false,
       catchmsg:"",
-      errormsg:""
+      errormsg:"",
+      notAnsweredIndicationColor: COLOR_NOT_ANSWERED,
+      // loadingSuccess:false,
+      // catchmsg:"",
+      // errormsg:"",
     }
   }
   
   handleNext=()=>{
-    this.setState({activeStep:this.state.activeStep+1})
+    if (this.state.userId.length > 0 ){
+      this.setState({activeStep:this.state.activeStep+1})
+    }
+    else {
+      this.setState({catchmsg:"Please enter ID", errormsg:"error", open:true})
+    }
   }
 
   handleBack=()=>{
@@ -67,7 +80,7 @@ class App extends Component {
     if (reason === 'clickaway') {
       return;
     }
-    this.setState({open : false})
+    this.setState({open : false, notAnsweredIndicationColor: COLOR_NOT_ANSWERED})
   }
 
   onInputChange = (e) => {
@@ -103,8 +116,10 @@ class App extends Component {
       })
     })
     if(notattempcount<=(list.length * list[0].options.length) && notattempcount>(list.length * (list[0].options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
-      this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true})
+      console.log("Popping up, wait for me please!")
+      this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true, notAnsweredIndicationColor: "#e00"})
     }else{
+      console.log("Sending to server 🫡")
       this.setState({Total:count})
 
       /*
@@ -169,6 +184,7 @@ class App extends Component {
     const item = this.state.questionList[this.state.activeStep]
     return (
       <div className="App">
+        {this.Snackbarrender()}
         <div className="Quiz_render_container">
           <div className="Quiz_container_display">
             {this.state.activeStep < 0 ? 
@@ -202,7 +218,7 @@ class App extends Component {
           </div>
         </div>
         <div className="Quiz-MobileStepper">
-          <MobileStepper variant="dots" steps={this.state.questionList.length} position="static" activeStep={this.state.activeStep}  
+          <MobileStepper variant="dots" steps={this.state.activeStep < 0 ? 0 : this.state.questionList.length} position="static" activeStep={this.state.activeStep}  
             nextButton={this.state.activeStep === (this.state.questionList.length - 1) ?
               <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
                 :
@@ -210,6 +226,27 @@ class App extends Component {
             }
             backButton={<Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>Back</Button>} //Back button
             />
+
+          <div>
+            {this.state.activeStep < 0 ? null : <div style={{textAlign: "center"}}>
+              {this.state.questionList.map((item, index) => <div style={{
+                backgroundColor: 
+                  this.state.activeStep === index ? COLOR_SELECTED : // check if it is current question
+                    item.options.filter(option => option.selected).length > 0 ? COLOR_ANSWERED : this.state.notAnsweredIndicationColor, // if the question is answered, green, if not, grey.
+                    width: "1.5em",
+                    height: "1.5em",
+                    lineHeight: "1.5em",
+                    textAlign: "center",
+                    color: "#fff",
+                    cursor: "pointer",
+                    display: "inline-block",
+                    margin: "0.5em 0.25em",
+                    borderRadius: "50%",
+              }} onClick={() => this.setState({activeStep: index})}>
+                {index + 1}
+              </div>)}
+            </div>}
+          </div>
         </div>
       </div>
     );
@@ -273,7 +310,7 @@ const questionList = [
     audioSrc: "vlts/audio/practice/carry.mp3",
     options: [{que_options : "談論" , selected: false}, {que_options : "攜帶" , selected: false}, {que_options : "寫上姓名" , selected: false}, {que_options : "搖動" , selected: false}],
     ans: "攜帶",
-  }/*,
+  },
   {
     question_number: "1",
     type: questionTypes.LVLT_1000,
@@ -308,7 +345,7 @@ const questionList = [
     audioSrc: "vlts/audio/1k/jump.mp3",
     options: [{que_options : "漂浮" , selected: false}, {que_options : "跳躍" , selected: false}, {que_options : "停車" , selected: false}, {que_options : "跑步" , selected: false}],
     ans: "跳躍"
-  },
+  }/*,
   {
     question_number: "6",
     type: questionTypes.LVLT_1000,
