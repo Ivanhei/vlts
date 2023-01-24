@@ -3,6 +3,7 @@ import './App.css';
 import { Component, createRef, useRef, useState, useEffect } from "react";
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 //import Icon from '@material-ui/icons';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from "@material-ui/lab/Alert";
@@ -67,13 +68,20 @@ class App extends Component {
   }
 
   handleNext=()=>{
-    if (this.state.userId.length > 0 ){
-      this.setState({activeStep:this.state.activeStep+1, userIdError: false})
+    const currentQuestionNotAnswered = this.state.activeStep >= 0 && !this.state.questionList[this.state.activeStep].options.filter(option => option.selected)[0]
+    // Error: currentQuestionNotAnswered
+    if (currentQuestionNotAnswered) {
+      this.setState({catchmsg:"Please answer the question", errormsg:"error", open:true})
     }
-    else {
+    // Error: UserId not entered
+    else if (this.state.userId.length <= 0 ){
       this.setState({//catchmsg:"Please enter ID", errormsg:"error", open:true, 
         userIdError: true
       })
+    }
+    // proceed to next question
+    else {
+      this.setState({activeStep: this.state.activeStep + 1, userIdError: false})
     }
   }
 
@@ -192,19 +200,25 @@ class App extends Component {
     return (
       <div className="App">
         {this.Snackbarrender()}
-        <div className="Quiz-MobileStepper m-3">
+        <div className="Quiz-MobileStepper m-4">
           <div className="flex m-2">
-            <Button variant="outlined" size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>Back</Button>
-            <div className="flex-grow flex justify-center"></div>
+            <Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>
+              <KeyboardArrowLeft/>Back
+            </Button>
+            <div className="flex-grow flex justify-center items-center">
+              <span>{this.state.activeStep + 1} / {this.state.questionList.length}</span>
+            </div>
             {this.state.activeStep === (this.state.questionList.length - 1) ?
-              <Button variant="outlined" size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
+              <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
                 :
-              <Button variant="outlined" size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>Next</Button> //Next button
+              <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>
+                Next <KeyboardArrowRight/>
+              </Button> //Next button
             }
           </div>
 
-          <div className="my-8">
-            {/* {this.state.activeStep < 0 ? null :  */}
+          {/* <div className="my-16">
+            {true ? null : 
             <div style={{textAlign: "center"}} className="flex mx-4">
               {this.state.questionList.map((item, index) => <div style={{
                 backgroundColor: 
@@ -218,24 +232,26 @@ class App extends Component {
               }}
               className="flex-grow"
               onClick={() => this.setState({activeStep: index})}>
-                {/* {index + 1} */}
               </div>)}
             </div>
-            {/* } */}
-          </div>
+            }
+          </div> */}
         </div>
         <div className="Quiz_render_container">
-          <div className="Quiz_container_display mx-5 my-3 flex justify-center">
+          <div className="Quiz_container_display mx-5 my-24 flex justify-center">
             {this.state.activeStep < 0 ? 
-              <TextField
-                lable={"ID"}
-                helperText={this.state.userIdError
-                  ? 'Woops. Please attempt to enter an ID.'
-                  : 'Please enter your given ID here.'}
-                value={this.state.userId}
-                onChange={this.onIDChange}
-                error={this.state.userIdError}
-              />
+              <div className="justify-center">
+                <TextField
+                  lable={"ID"}
+                  helperText={this.state.userIdError
+                    ? 'Woops. Please attempt to enter an ID.'
+                    : 'Please enter your given ID here.'}
+                  value={this.state.userId}
+                  onChange={this.onIDChange}
+                  error={this.state.userIdError}
+                />
+                <div>For each question, you must answer it to proceed to the next question.</div>
+              </div>
               /*<div className="mx-8 my-20">
                 <div>Please enter your ID:</div>
                 <input type="text" value={this.state.userId} onChange={this.onIDChange} className="border-2 border-black"/>
