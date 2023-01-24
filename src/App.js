@@ -3,13 +3,14 @@ import './App.css';
 import { Component, createRef, useRef, useState, useEffect } from "react";
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
-//import Replay from '@material-ui/icons/Replay';
+//import Icon from '@material-ui/icons';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from "@material-ui/lab/Alert";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
+import { TextField } from '@material-ui/core';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -50,6 +51,7 @@ class App extends Component {
     this.questionAudio = createRef();
     this.state = {
       userId: "",
+      userIdError: false,
       activeStep:-1,
       questionList : questionList,
       booleanonsubmit : false,
@@ -63,13 +65,15 @@ class App extends Component {
       // errormsg:"",
     }
   }
-  
+
   handleNext=()=>{
     if (this.state.userId.length > 0 ){
-      this.setState({activeStep:this.state.activeStep+1})
+      this.setState({activeStep:this.state.activeStep+1, userIdError: false})
     }
     else {
-      this.setState({catchmsg:"Please enter ID", errormsg:"error", open:true})
+      this.setState({//catchmsg:"Please enter ID", errormsg:"error", open:true, 
+        userIdError: true
+      })
     }
   }
 
@@ -99,8 +103,10 @@ class App extends Component {
   onIDChange = (e) => {
     this.setState({userId: e.target.value})
     answerSheet.username = e.target.value
+
+    console.log("UserId", this.state.userId)
   }
-  
+
   onsubmit = () =>{
     let list = this.state.questionList ;
     let count = 0;
@@ -186,20 +192,20 @@ class App extends Component {
     return (
       <div className="App">
         {this.Snackbarrender()}
-        <div className="Quiz-MobileStepper">
-          <MobileStepper variant="dots" steps={0} // steps={this.state.activeStep < 0 ? 0 : this.state.questionList.length} 
-          position="static" activeStep={this.state.activeStep}  
-            nextButton={this.state.activeStep === (this.state.questionList.length - 1) ?
-              <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
+        <div className="Quiz-MobileStepper m-3">
+          <div className="flex m-2">
+            <Button variant="outlined" size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>Back</Button>
+            <div className="flex-grow flex justify-center"></div>
+            {this.state.activeStep === (this.state.questionList.length - 1) ?
+              <Button variant="outlined" size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
                 :
-              <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>Next</Button> //Next button
+              <Button variant="outlined" size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>Next</Button> //Next button
             }
-            backButton={<Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>Back</Button>} //Back button
-            style={{background: "none"}}
-            />
+          </div>
 
-          <div>
-            {this.state.activeStep < 0 ? null : <div style={{textAlign: "center"}} className="flex mx-4">
+          <div className="my-8">
+            {/* {this.state.activeStep < 0 ? null :  */}
+            <div style={{textAlign: "center"}} className="flex mx-4">
               {this.state.questionList.map((item, index) => <div style={{
                 backgroundColor: 
                   this.state.activeStep === index ? COLOR_SELECTED : // check if it is current question
@@ -214,34 +220,48 @@ class App extends Component {
               onClick={() => this.setState({activeStep: index})}>
                 {/* {index + 1} */}
               </div>)}
-            </div>}
+            </div>
+            {/* } */}
           </div>
         </div>
         <div className="Quiz_render_container">
-          <div className="Quiz_container_display mx-5 my-3">
+          <div className="Quiz_container_display mx-5 my-3 flex justify-center">
             {this.state.activeStep < 0 ? 
-              <div className="mx-32 my-20">
+              <TextField
+                lable={"ID"}
+                helperText={this.state.userIdError
+                  ? 'Woops. Please attempt to enter an ID.'
+                  : 'Please enter your given ID here.'}
+                value={this.state.userId}
+                onChange={this.onIDChange}
+                error={this.state.userIdError}
+              />
+              /*<div className="mx-8 my-20">
                 <div>Please enter your ID:</div>
                 <input type="text" value={this.state.userId} onChange={this.onIDChange} className="border-2 border-black"/>
-              </div>
+              </div>*/
              : 
-              <div>
+              <div className="">
                 <div>{item.type.instruction}</div>
-                {item.audioSrc ? <div><AudioControl src={item.audioSrc}/></div> : <></>}
+                {item.audioSrc ? <div className="mt-4 mb-2"><AudioControl src={item.audioSrc}/></div> : <></>}
                 {item.questionStatement ? <div>{item.questionStatement}</div> : <></>}
                 <div> Options are : </div>
                   {item.options.map((ans,index_ans)=>{
                     index_ans = index_ans + 1
                       return (
-                        <div key = {index_ans} className="Quiz_multiple_options">
+                        <div key = {index_ans} className="Quiz_multiple_options m-2">
                         <input
                           key={index_ans}
                           type="radio"
+                          className="mr-2"
                           name={item.question_number}
+                          id={item.question_number + "_" + index_ans}
                           value={ans.que_options}
                           checked={!!ans.selected}
                           onChange={this.onInputChange} />
-                          {index_ans}) {ans.que_options}
+                          <label htmlFor={item.question_number + "_" + index_ans}>
+                            {index_ans}) {ans.que_options}
+                          </label>
                         </div>
                       )
                   })}
@@ -267,11 +287,16 @@ function AudioControl(props) {
       audioEl.pause()
   }, [audioRef, audioPlaying])
 
+  useEffect(() => {
+    if (audioRef.current)
+      setAudioPlaying(!audioRef.current.paused)
+  }, [audioRef.current?.paused])
+
   return <>
     <audio ref={audioRef} src={props.src} /*controls*//>
     {audioPlaying ? 
-      <button onClick={() => setAudioPlaying(false)}>Pause</button> : 
-      <button onClick={() => setAudioPlaying(true)}>Play</button>}
+      <Button variant="outlined" onClick={() => setAudioPlaying(false)} className={props.className}>Pause</Button> : 
+      <Button variant="outlined" onClick={() => setAudioPlaying(true)} className={props.className}>Play</Button>}
   </>
 }
 
