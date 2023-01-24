@@ -64,13 +64,20 @@ class App extends Component {
       // loadingSuccess:false,
       // catchmsg:"",
       // errormsg:"",
+      resetTrigger: 0,
     }
   }
 
+  checkCurrentQuestionAnswered = () => {
+    const currentQuestionNotAnswered = 
+      this.state.activeStep >= 0 && 
+      !this.state.questionList[this.state.activeStep].options.filter(option => option.selected)[0]
+    return !currentQuestionNotAnswered
+  }
+
   handleNext=()=>{
-    const currentQuestionNotAnswered = this.state.activeStep >= 0 && !this.state.questionList[this.state.activeStep].options.filter(option => option.selected)[0]
     // Error: currentQuestionNotAnswered
-    if (currentQuestionNotAnswered) {
+    if (!this.checkCurrentQuestionAnswered()) {
       this.setState({catchmsg:"Please answer the question", errormsg:"error", open:true})
     }
     // Error: UserId not entered
@@ -81,7 +88,9 @@ class App extends Component {
     }
     // proceed to next question
     else {
-      this.setState({activeStep: this.state.activeStep + 1, userIdError: false})
+      this.setState({activeStep: this.state.activeStep + 1, userIdError: false,
+        resetTrigger: this.state.resetTrigger + 1,
+      })
     }
   }
 
@@ -112,11 +121,12 @@ class App extends Component {
     this.setState({userId: e.target.value})
     answerSheet.username = e.target.value
 
-    console.log("UserId", this.state.userId)
+    //console.log("UserId", this.state.userId)
   }
 
   onsubmit = () =>{
     let list = this.state.questionList ;
+    /*
     let count = 0;
     let notattempcount = 0;
     list.map((item,key)=>{
@@ -130,67 +140,84 @@ class App extends Component {
         }
       })
     })
-    if(notattempcount<=(list.length * list[0].options.length) && notattempcount>(list.length * (list[0].options.length - 1))){ //depends on option list (notattempcount<= no. of possible options && notattempcount> no. of question * (no. of options - 1))
-      console.log("Popping up, wait for me please!")
-      this.setState({Total:count, catchmsg:"Please attempt all questions", errormsg:"error", open:true, notAnsweredIndicationColor: COLOR_NOT_ANSWERED_CLICKABLE})
-    }else{
-      console.log("Sending to server 🫡")
-      this.setState({Total:count})
+    */
 
-      /*
-      const answerSheet = {
-        username: string,
-        answers: [{
-          questionNumber: number,
-          value: string,
-          correct: boolean,
-        }, ...],
-        score: number,
-      }
-      */
-    
-      function abc(option) {
-        return option.selected
-      }
-
-      list.forEach((item,key)=>{
-        const answeredOption = item.options.filter(abc)[0]
-        if (answeredOption) {
-          const correct = item.ans === answeredOption.que_options
-          answerSheet.answers.push({
-            questionType: item.type,
-            questionNumber: item.question_number,
-            value: answeredOption.que_options,
-            correct: correct,
-          })
-          answerSheet.score += correct ? 1 : 0
-          console.log(answerSheet)
-        }
-        // [o1, o2, o3]    |     fun ^
-        //map
-        // [fun(o1), fun(o2), fun(o3)]
-      })
-
-      addDoc(collection(db, "answersheets"), answerSheet)
-        .then(docRef => {
-          console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(e => {
-          console.error("Error adding document: ", e);
-        })
+    // check if last question is answered
+    if (!this.checkCurrentQuestionAnswered()) {
+      this.setState({catchmsg:"Please answer the question", errormsg:"error", open:true})
+      return
     }
+
+    console.log("Sending to server 🫡")
+
+
+    this.setState({
+      catchmsg:"Uploading your answer sheet.", errormsg:"info", open:true, 
+      notAnsweredIndicationColor: COLOR_NOT_ANSWERED_CLICKABLE
+    })
+
+    /*
+    const answerSheet = {
+      username: string,
+      answers: [{
+        questionNumber: number,
+        value: string,
+        correct: boolean,
+      }, ...],
+      score: number,
+    }
+    */
+  
+    function abc(option) {
+      return option.selected
+    }
+
+    list.forEach((item,key)=>{
+      const answeredOption = item.options.filter(abc)[0]
+      if (answeredOption) {
+        const correct = item.ans === answeredOption.que_options
+        answerSheet.answers.push({
+          questionType: item.type,
+          questionNumber: item.question_number,
+          value: answeredOption.que_options,
+          correct: correct,
+          skipScore: item.skipScore || false,
+        })
+        answerSheet.score += !item.skipScore && correct ? 1 : 0
+        console.log(answerSheet)
+      }
+    })
+
+    addDoc(collection(db, "answersheets"), answerSheet)
+      .then(docRef => {
+        console.log("Document written with ID: ", docRef.id);
+        this.setState({
+          catchmsg:"Your answersheet has been uploaded successfully!", errormsg:"success", open:true,
+          activeStep: this.state.activeStep + 1,
+        })
+      })
+      .catch(e => {
+        console.error("Error adding document: ", e);
+        this.setState({catchmsg:"There were errors while submitting answer sheet.", errormsg:"error", open:true})
+      })
   }
 
   Snackbarrender =() =>{
     return(
-      this.state.open? 
+      this.state.open? <>
         <Snackbar 
           open={this.state.open} 
-          autoHideDuration={5000}  
+          autoHideDuration={3000}
           onClose={this.handleClose} 
           style={{marginTop:'0px',width:'100%'}}>
-            <MuiAlert elevation={6} variant="filled" onClose={this.handleClose} severity={this.state.errormsg}> {this.state.catchmsg} </MuiAlert>
+            <MuiAlert 
+              elevation={6}
+              variant="filled" onClose={this.handleClose}
+              severity={this.state.errormsg}> 
+              {this.state.catchmsg} 
+            </MuiAlert>
         </Snackbar> 
+        </>
       : null
     )
   }
@@ -202,14 +229,16 @@ class App extends Component {
         {this.Snackbarrender()}
         <div className="Quiz-MobileStepper m-4">
           <div className="flex m-2">
-            <Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0}>
+            <Button size="small" onClick={this.handleBack} disabled={this.state.activeStep < 0 || this.state.activeStep > this.state.questionList.length - 1}>
               <KeyboardArrowLeft/>Back
             </Button>
             <div className="flex-grow flex justify-center items-center">
-              <span>{this.state.activeStep + 1} / {this.state.questionList.length}</span>
+              {this.state.activeStep < this.state.questionList.length ?
+                <span>{this.state.activeStep + 1} / {this.state.questionList.length}</span>
+                : null}
             </div>
-            {this.state.activeStep === (this.state.questionList.length - 1) ?
-              <Button size="small" onClick={this.onsubmit}>Submit</Button> //Submit button
+            {this.state.activeStep >= (this.state.questionList.length - 1) ?
+              <Button size="small" onClick={this.onsubmit} disabled={this.state.activeStep === this.state.questionList.length}>Submit <KeyboardArrowRight/></Button> //Submit button
                 :
               <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === this.state.questionList.length}>
                 Next <KeyboardArrowRight/>
@@ -217,8 +246,8 @@ class App extends Component {
             }
           </div>
 
-          {/* <div className="my-16">
-            {true ? null : 
+          {/* { <div className="my-16">
+            {false ? null : 
             <div style={{textAlign: "center"}} className="flex mx-4">
               {this.state.questionList.map((item, index) => <div style={{
                 backgroundColor: 
@@ -235,11 +264,12 @@ class App extends Component {
               </div>)}
             </div>
             }
-          </div> */}
+          </div>} */}
         </div>
         <div className="Quiz_render_container">
-          <div className="Quiz_container_display mx-5 my-24 flex justify-center">
+          <div className="Quiz_container_display mx-10 my-24 flex justify-center">
             {this.state.activeStep < 0 ? 
+              // Page BEFORE Test
               <div className="justify-center">
                 <TextField
                   lable={"ID"}
@@ -250,16 +280,17 @@ class App extends Component {
                   onChange={this.onIDChange}
                   error={this.state.userIdError}
                 />
-                <div>For each question, you must answer it to proceed to the next question.</div>
+                <div>You must answer each question in order to proceed to the next question.</div>
               </div>
-              /*<div className="mx-8 my-20">
-                <div>Please enter your ID:</div>
-                <input type="text" value={this.state.userId} onChange={this.onIDChange} className="border-2 border-black"/>
-              </div>*/
-             : 
-              <div className="">
+              // Page AFTER Test
+             : this.state.activeStep > this.state.questionList.length - 1 ?
+              <div>
+                Thank you for your participation!
+              </div> 
+             : // Pages DURING Test
+              <div>
                 <div>{item.type.instruction}</div>
-                {item.audioSrc ? <div className="mt-4 mb-2"><AudioControl src={item.audioSrc}/></div> : <></>}
+                {item.audioSrc ? <div className="mt-4 mb-2"><AudioControl src={item.audioSrc} resetTrigger={this.state.resetTrigger}/></div> : <></>}
                 {item.questionStatement ? <div>{item.questionStatement}</div> : <></>}
                 <div> Options are : </div>
                   {item.options.map((ans,index_ans)=>{
@@ -293,6 +324,17 @@ class App extends Component {
 function AudioControl(props) {
   const audioRef = useRef()
   const [audioPlaying, setAudioPlaying] = useState(false)
+
+  // force pause through parent prop
+  // useEffect(() => {
+  //   const audioEl = audioRef.current
+
+  //   audioEl.pause();
+  //   audioEl.currentTime = 0;
+  // }, [audioRef, props.resetTrigger])
+  useEffect(() => {
+    setAudioPlaying(false)
+  }, [props.resetTrigger])
 
   useEffect(() => {
     const audioEl = audioRef.current
@@ -344,7 +386,8 @@ const questionList = [
     type: questionTypes.LVLT_Practice,
     audioSrc: "vlts/audio/practice/strong.mp3",
     options: [{que_options : "強壯" , selected: false}, {que_options : "快樂" , selected: false}, {que_options : "吃太多" , selected: false}, {que_options : "親切" , selected: false}],
-    ans: "強壯" 
+    ans: "強壯",
+    skipScore: true,
   },
   {
     question_number: "Practice 2",
@@ -352,6 +395,7 @@ const questionList = [
     audioSrc: "vlts/audio/practice/carry.mp3",
     options: [{que_options : "談論" , selected: false}, {que_options : "攜帶" , selected: false}, {que_options : "寫上姓名" , selected: false}, {que_options : "搖動" , selected: false}],
     ans: "攜帶",
+    skipScore: true,
   },
   {
     question_number: "1",
@@ -359,7 +403,7 @@ const questionList = [
     audioSrc: "vlts/audio/1k/time.mp3",
     options: [{que_options : "錢" , selected: false}, {que_options : "食物" , selected: false}, {que_options : "時間" , selected: false}, {que_options : "朋友" , selected: false}],
     ans: "時間" 
-  },
+  },/*
   {
     question_number: "2",
     type: questionTypes.LVLT_1000,
@@ -890,20 +934,25 @@ const questionList = [
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/notwithstanding.mp3",
     options: [{que_options : "不知地" , selected: false}, {que_options : "報答" , selected: false}, {que_options : "藉以" , selected: false}, {que_options : "盡管" , selected: false}],
-    ans: "盡管"
+    ans: "儘管"
   },
   {
     question_number: "30",
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/perspective.mp3",
-    options: [{que_options : "循環" , selected: false}, {que_options : "前途" , selected: false}, {que_options : "網絡" , selected: false}, {que_options : "狀態" , selected: false}],
-    ans: "狀態"
-  },
+    options: [{que_options : "循環" , selected: false}, {que_options : "觀點" , selected: false}, {que_options : "網絡" , selected: false}, {que_options : "狀態" , selected: false}],
+    ans: "觀點"
+  }/*,
   {
     type: questionTypes.VLT,
     readingText: "",
-    options: ["", "", "", ""],
-  }
+    options: [
+      {que_options : "" , selected: false}, 
+      {que_options : "" , selected: false}, 
+      {que_options : "" , selected: false}, 
+      {que_options : "" , selected: false}, 
+    ],
+  }*/
 ]
 
 /**
