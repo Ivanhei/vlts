@@ -371,6 +371,18 @@ const questionTypes = {
     instruction: "Listen to the audio once by clicking the button, "
       + "and select the most appropriate answer."
   },
+  "LVLT_3000": {
+    instruction: "Listen to the audio once by clicking the button, "
+      + "and select the most appropriate answer."
+  },
+  "LVLT_4000": {
+    instruction: "Listen to the audio once by clicking the button, "
+      + "and select the most appropriate answer."
+  },
+  "LVLT_5000": {
+    instruction: "Listen to the audio once by clicking the button, "
+      + "and select the most appropriate answer."
+  },
   "LVLT_AWL": {
     instruction: "Listen to the audio once by clicking the button, "
       + "and select the most appropriate answer."
@@ -403,7 +415,7 @@ const questionList = [
     audioSrc: "vlts/audio/1k/time.mp3",
     options: [{que_options : "錢" , selected: false}, {que_options : "食物" , selected: false}, {que_options : "時間" , selected: false}, {que_options : "朋友" , selected: false}],
     ans: "時間" 
-  },/*
+  },
   {
     question_number: "2",
     type: questionTypes.LVLT_1000,
@@ -422,8 +434,8 @@ const questionList = [
     question_number: "4",
     type: questionTypes.LVLT_1000,
     audioSrc: "vlts/audio/1k/drive.mp3",
-    options: [{que_options : "遊泳" , selected: false}, {que_options : "學習" , selected: false}, {que_options : "投球" , selected: false}, {que_options : "開車" , selected: false}],
-    ans: "開車"
+    options: [{que_options : "遊泳" , selected: false}, {que_options : "學習" , selected: false}, {que_options : "投球" , selected: false}, {que_options : "駕駛" , selected: false}],
+    ans: "駕駛"
   },
   {
     question_number: "5",
@@ -478,8 +490,8 @@ const questionList = [
     question_number: "12",
     type: questionTypes.LVLT_1000,
     audioSrc: "vlts/audio/1k/far.mp3",
-    options: [{que_options : "很長一段時間" , selected: false}, {que_options : "很快地" , selected: false}, {que_options : "遠的" , selected: false}, {que_options : "到你的家" , selected: false}],
-    ans: "遠的"
+    options: [{que_options : "很長一段時間" , selected: false}, {que_options : "很快地" , selected: false}, {que_options : "很遠的" , selected: false}, {que_options : "到你的家" , selected: false}],
+    ans: "很遠的"
   },
   {
     question_number: "13",
@@ -506,7 +518,7 @@ const questionList = [
     question_number: "16",
     type: questionTypes.LVLT_1000,
     audioSrc: "vlts/audio/1k/where.mp3",
-    options: [{que_options : "在什麽時間" , selected: false}, {que_options : "為甚麽" , selected: false}, {que_options : "哪里" , selected: false}, {que_options : "用什麽方法" , selected: false}],
+    options: [{que_options : "在什麽時間" , selected: false}, {que_options : "為甚麽" , selected: false}, {que_options : "哪裡" , selected: false}, {que_options : "用什麽方法" , selected: false}],
     ans: "哪裡"
   },
   {
@@ -597,8 +609,8 @@ const questionList = [
     question_number: "5",
     type: questionTypes.LVLT_2000,
     audioSrc: "vlts/audio/2k/upset.mp3",
-    options: [{que_options : "強壯的" , selected: false}, {que_options : "有名的" , selected: false}, {que_options : "富有的" , selected: false}, {que_options : "不高興的" , selected: false}],
-    ans: "不高興的"
+    options: [{que_options : "強壯的" , selected: false}, {que_options : "有名的" , selected: false}, {que_options : "富有的" , selected: false}, {que_options : "難過的" , selected: false}],
+    ans: "難過的"
   },
   {
     question_number: "6",
@@ -681,7 +693,7 @@ const questionList = [
     question_number: "17",
     type: questionTypes.LVLT_2000,
     audioSrc: "vlts/audio/2k/refer.mp3",
-    options: [{que_options : "強壯" , selected: false}, {que_options : "快樂" , selected: false}, {que_options : "吃太多" , selected: false}, {que_options : "親切" , selected: false}],
+    options: [{que_options : "支持" , selected: false}, {que_options : "禮讓" , selected: false}, {que_options : "查詢" , selected: false}, {que_options : "回答" , selected: false}],
     ans: "查詢"
   },
   {
@@ -723,15 +735,519 @@ const questionList = [
     question_number: "23",
     type: questionTypes.LVLT_2000,
     audioSrc: "vlts/audio/2k/warn.mp3",
-    options: [{que_options : "被推走" , selected: false}, {que_options : "受邀進來" , selected: false}, {que_options : "被警告" , selected: false}, {que_options : "導致戰爭" , selected: false}],
-    ans: "被警告"
+    options: [{que_options : "被推走" , selected: false}, {que_options : "受邀進來" , selected: false}, {que_options : "警告" , selected: false}, {que_options : "導致戰爭" , selected: false}],
+    ans: "警告"
   },
   {
     question_number: "24",
     type: questionTypes.LVLT_2000,
     audioSrc: "vlts/audio/2k/reserve.mp3",
     options: [{que_options : "庫存" , selected: false}, {que_options : "烤箱" , selected: false}, {que_options : "負債" , selected: false}, {que_options : "受雇者" , selected: false}],
-    ans: "reserve"
+    ans: "庫存"
+  },
+  {
+    question_number: "1",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/restore.mp3",
+    options: [{que_options : "重覆" , selected: false}, {que_options : "轉換" , selected: false}, {que_options : "降價" , selected: false}, {que_options : "修復" , selected: false}],
+    ans: "修復" 
+  },
+  {
+    question_number: "2",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/compound.mp3",
+    options: [{que_options : "條款" , selected: false}, {que_options : "化合物" , selected: false}, {que_options : "公司" , selected: false}, {que_options : "預測" , selected: false}],
+    ans: "化合物"
+  },
+  {
+    question_number: "3",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/latter.mp3",
+    options: [{que_options : "牧師" , selected: false}, {que_options : "理由" , selected: false}, {que_options : "後者" , selected: false}, {que_options : "答案" , selected: false}],
+    ans: "後者"
+  },
+  {
+    question_number: "4",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/pave.mp3",
+    options: [{que_options : "被塞住" , selected: false}, {que_options : "分擔，共享" , selected: false}, {que_options : "饟金邊" , selected: false}, {que_options : "鋪路" , selected: false}],
+    ans: "鋪路"
+  },
+  {
+    question_number: "5",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/remedy.mp3",
+    options: [{que_options : "補救的辦法" , selected: false}, {que_options : "飯店" , selected: false}, {que_options : "烹飪的方法" , selected: false}, {que_options : "方程式" , selected: false}],
+    ans: "補救的辦法"
+  },
+  {
+    question_number: "6",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/bacterium.mp3",
+    options: [{que_options : "細菌" , selected: false}, {que_options : "一種紅色的花" , selected: false}, {que_options : "駱駝" , selected: false}, {que_options : "贓物" , selected: false}],
+    ans: "細菌"
+  },
+  {
+    question_number: "7",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/behavior.mp3",
+    options: [{que_options : "聽眾" , selected: false}, {que_options : "行為" , selected: false}, {que_options : "一大筆錢" , selected: false}, {que_options : "島嶼" , selected: false}],
+    ans: "行為"
+  },
+  {
+    question_number: "8",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/fuel.mp3",
+    options: [{que_options : "燃料" , selected: false}, {que_options : "止痛劑" , selected: false}, {que_options : "布" , selected: false}, {que_options : "絕緣材料" , selected: false}],
+    ans: "燃料"
+  },
+  {
+    question_number: "9",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/silk.mp3",
+    options: [{que_options : "絲綢" , selected: false}, {que_options : "黑色的木頭" , selected: false}, {que_options : "羽毛" , selected: false}, {que_options : "光亮的金屬" , selected: false}],
+    ans: "絲綢"
+  },
+  {
+    question_number: "10",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/conceive.mp3",
+    options: [{que_options : "告密" , selected: false}, {que_options : "解釋" , selected: false}, {que_options : "構想" , selected: false}, {que_options : "批評" , selected: false}],
+    ans: "構想"
+  },
+  {
+    question_number: "11",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/legend.mp3",
+    options: [{que_options : "博物館" , selected: false}, {que_options : "習慣" , selected: false}, {que_options : "傳奇" , selected: false}, {que_options : "慣例" , selected: false}],
+    ans: "傳奇"
+  },
+  {
+    question_number: "12",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/impose.mp3",
+    options: [{que_options : "完全改變" , selected: false}, {que_options : "正當其中" , selected: false}, {que_options : "類似" , selected: false}, {que_options : "強制實行" , selected: false}],
+    ans: "強制實行"
+  },
+  {
+    question_number: "13",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/solution.mp3",
+    options: [{que_options : "時間" , selected: false}, {que_options : "輔助" , selected: false}, {que_options : "問題" , selected: false}, {que_options : "解決方法" , selected: false}],
+    ans: "解決方法"
+  },
+  {
+    question_number: "14",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/celebrate.mp3",
+    options: [{que_options : "發現" , selected: false}, {que_options : "檢查" , selected: false}, {que_options : "認真工作" , selected: false}, {que_options : "慶祝" , selected: false}],
+    ans: "慶祝"
+  },
+  {
+    question_number: "15",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/independence.mp3",
+    options: [{que_options : "自主" , selected: false}, {que_options : "孤獨" , selected: false}, {que_options : "權勢" , selected: false}, {que_options : "驕傲" , selected: false}],
+    ans: "自主"
+  },
+  {
+    question_number: "16",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/tunnel.mp3",
+    options: [{que_options : "隧道" , selected: false}, {que_options : "木棒" , selected: false}, {que_options : "連字號" , selected: false}, {que_options : "窗簾" , selected: false}],
+    ans: "隧道"
+  },
+  {
+    question_number: "17",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/reward.mp3",
+    options: [{que_options : "讚美" , selected: false}, {que_options : "幫忙家務" , selected: false}, {que_options : "報酬" , selected: false}, {que_options : "聽眾" , selected: false}],
+    ans: "報酬"
+  },
+  {
+    question_number: "18",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/review.mp3",
+    options: [{que_options : "審查" , selected: false}, {que_options : "接受" , selected: false}, {que_options : "複製" , selected: false}, {que_options : "拋棄" , selected: false}],
+    ans: "審查"
+  },
+  {
+    question_number: "19",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/mode.mp3",
+    options: [{que_options : "模式" , selected: false}, {que_options : "速度" , selected: false}, {que_options : "態度" , selected: false}, {que_options : "量" , selected: false}],
+    ans: "模式"
+  },
+  {
+    question_number: "20",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/personnel.mp3",
+    options: [{que_options : "椅子" , selected: false}, {que_options : "空氣質量" , selected: false}, {que_options : "人員" , selected: false}, {que_options : "雇主" , selected: false}],
+    ans: "人員"
+  },
+  {
+    question_number: "21",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/competent.mp3",
+    options: [{que_options : "有效率的" , selected: false}, {que_options : "生氣的" , selected: false}, {que_options : "能幹的" , selected: false}, {que_options : "容易受傷的" , selected: false}],
+    ans: "能幹的"
+  },
+  {
+    question_number: "22",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/devastate.mp3",
+    options: [{que_options : "裝飾" , selected: false}, {que_options : "隔離" , selected: false}, {que_options : "破壞" , selected: false}, {que_options : "污染" , selected: false}],
+    ans: "破壞"
+  },
+  {
+    question_number: "23",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/constituent.mp3",
+    options: [{que_options : "建築" , selected: false}, {que_options : "同意" , selected: false}, {que_options : "想法" , selected: false}, {que_options : "成分" , selected: false}],
+    ans: "成分"
+  },
+  {
+    question_number: "24",
+    type: questionTypes.LVLT_3000,
+    audioSrc: "vlts/audio/3k/weave.mp3",
+    options: [{que_options : "編織" , selected: false}, {que_options : "焊接" , selected: false}, {que_options : "說服" , selected: false}, {que_options : "欺騙" , selected: false}],
+    ans: "編織"
+  },
+  {
+    question_number: "1",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/patience.mp3",
+    options: [{que_options : "耐性" , selected: false}, {que_options : "空閑時間" , selected: false}, {que_options : "信念" , selected: false}, {que_options : "智慧" , selected: false}],
+    ans: "耐性" 
+  },
+  {
+    question_number: "2",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/strap.mp3",
+    options: [{que_options : "承諾" , selected: false}, {que_options : "蓋子" , selected: false}, {que_options : "盤子" , selected: false}, {que_options : "皮帶" , selected: false}],
+    ans: "皮帶"
+  },
+  {
+    question_number: "3",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/weep.mp3",
+    options: [{que_options : "畢業" , selected: false}, {que_options : "哭泣" , selected: false}, {que_options : "死亡" , selected: false}, {que_options : "擔心" , selected: false}],
+    ans: "哭泣"
+  },
+  {
+    question_number: "4",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/haunt.mp3",
+    options: [{que_options : "充滿裝飾的" , selected: false}, {que_options : "租來的" , selected: false}, {que_options : "空的" , selected: false}, {que_options : "鬧鬼的" , selected: false}],
+    ans: "開車"
+  },
+  {
+    question_number: "5",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/cube.mp3",
+    options: [{que_options : "大頭針" , selected: false}, {que_options : "方塊" , selected: false}, {que_options : "馬克杯" , selected: false}, {que_options : "明信片" , selected: false}],
+    ans: "方塊"
+  },
+  {
+    question_number: "6",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/peel.mp3",
+    options: [{que_options : "浸泡" , selected: false}, {que_options : "剝皮" , selected: false}, {que_options : "漂白" , selected: false}, {que_options : "刴" , selected: false}],
+    ans: "剝皮"
+  },
+  {
+    question_number: "7",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/distress.mp3",
+    options: [{que_options : "忘恩" , selected: false}, {que_options : "滿足" , selected: false}, {que_options : "痛苦" , selected: false}, {que_options : "活潑" , selected: false}],
+    ans: "痛苦"
+  },
+  {
+    question_number: "8",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/depart.mp3",
+    options: [{que_options : "出發" , selected: false}, {que_options : "拒絕" , selected: false}, {que_options : "下山" , selected: false}, {que_options : "變糟" , selected: false}],
+    ans: "出發"
+  },
+  {
+    question_number: "9",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/romance.mp3",
+    options: [{que_options : "意見分歧" , selected: false}, {que_options : "假期" , selected: false}, {que_options : "討論" , selected: false}, {que_options : "戀愛關係" , selected: false}],
+    ans: "戀愛關係"
+  },
+  {
+    question_number: "10",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/ambition.mp3",
+    options: [{que_options : "有野心的" , selected: false}, {que_options : "有同情心的" , selected: false}, {que_options : "具想像力的" , selected: false}, {que_options : "有樂趣的" , selected: false}],
+    ans: "有野心的"
+  },
+  {
+    question_number: "11",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/dash.mp3",
+    options: [{que_options : "猛衝" , selected: false}, {que_options : "徘徊" , selected: false}, {que_options : "打架" , selected: false}, {que_options : "瞥視" , selected: false}],
+    ans: "猛衝"
+  },
+  {
+    question_number: "12",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/drown.mp3",
+    options: [{que_options : "在外進餐" , selected: false}, {que_options : "溺水" , selected: false}, {que_options : "挖洞" , selected: false}, {que_options : "砍樹" , selected: false}],
+    ans: "溺水"
+  },
+  {
+    question_number: "13",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/originate.mp3",
+    options: [{que_options : "長得很好" , selected: false}, {que_options : "變形" , selected: false}, {que_options : "保持" , selected: false}, {que_options : "起源於" , selected: false}],
+    ans: "起源於"
+  },
+  {
+    question_number: "14",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/leaf.mp3",
+    options: [{que_options : "葉子" , selected: false}, {que_options : "柔軟的鞋子" , selected: false}, {que_options : "蓋子" , selected: false}, {que_options : "玻璃窗" , selected: false}],
+    ans: "葉子"
+  },
+  {
+    question_number: "15",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/amateur.mp3",
+    options: [{que_options : "業餘者" , selected: false}, {que_options : "替代球員" , selected: false}, {que_options : "國家代表" , selected: false}, {que_options : "球員" , selected: false}],
+    ans: "業餘者"
+  },
+  {
+    question_number: "16",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/evacuate.mp3",
+    options: [{que_options : "撤離" , selected: false}, {que_options : "搜身" , selected: false}, {que_options : "驚嚇" , selected: false}, {que_options : "誣陷，冤枉" , selected: false}],
+    ans: "撤離"
+  },
+  {
+    question_number: "17",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/exert.mp3",
+    options: [{que_options : "吹牛" , selected: false}, {que_options : "受傷" , selected: false}, {que_options : "盡力" , selected: false}, {que_options : "破壞" , selected: false}],
+    ans: "盡力"
+  },
+  {
+    question_number: "18",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/marble.mp3",
+    options: [{que_options : "大理石" , selected: false}, {que_options : "木頭" , selected: false}, {que_options : "軟金屬" , selected: false}, {que_options : "纖維" , selected: false}],
+    ans: "大理石"
+  },
+  {
+    question_number: "19",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/diminish.mp3",
+    options: [{que_options : "變暗" , selected: false}, {que_options : "減少" , selected: false}, {que_options : "變得多雲的" , selected: false}, {que_options : "變冷" , selected: false}],
+    ans: "減少"
+  },
+  {
+    question_number: "20",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/sheriff.mp3",
+    options: [{que_options : "機長" , selected: false}, {que_options : "管家" , selected: false}, {que_options : "警長" , selected: false}, {que_options : "家教" , selected: false}],
+    ans: "警長"
+  },
+  {
+    question_number: "21",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/monarch.mp3",
+    options: [{que_options : "軍隊" , selected: false}, {que_options : "大門" , selected: false}, {que_options : "君主" , selected: false}, {que_options : "罪犯" , selected: false}],
+    ans: "君主"
+  },
+  {
+    question_number: "22",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/plunge.mp3",
+    options: [{que_options : "到處雀躍" , selected: false}, {que_options : "驟然下降" , selected: false}, {que_options : "投入，陷入" , selected: false}, {que_options : "保持安靜" , selected: false}],
+    ans: "驟然下降"
+  },
+  {
+    question_number: "23",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/mourn.mp3",
+    options: [{que_options : "街頭表演" , selected: false}, {que_options : "悲痛" , selected: false}, {que_options : "努力" , selected: false}, {que_options : "謹慎花費的" , selected: false}],
+    ans: "悲痛"
+  },
+  {
+    question_number: "24",
+    type: questionTypes.LVLT_4000,
+    audioSrc: "vlts/audio/4k/fragile.mp3",
+    options: [{que_options : "昂貴的" , selected: false}, {que_options : "稀有的" , selected: false}, {que_options : "受歡迎的" , selected: false}, {que_options : "易碎的" , selected: false}],
+    ans: "易碎的"
+  },
+  {
+    question_number: "1",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/scrub.mp3",
+    options: [{que_options : "刷洗" , selected: false}, {que_options : "修理" , selected: false}, {que_options : "擔心" , selected: false}, {que_options : "素描" , selected: false}],
+    ans: "刷洗" 
+  },
+  {
+    question_number: "2",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/dinosaur.mp3",
+    options: [{que_options : "海盜" , selected: false}, {que_options : "精靈" , selected: false}, {que_options : "飛龍" , selected: false}, {que_options : "恐龍" , selected: false}],
+    ans: "恐龍"
+  },
+  {
+    question_number: "3",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/nun.mp3",
+    options: [{que_options : "蟲子" , selected: false}, {que_options : "嚴重的意外" , selected: false}, {que_options : "修女" , selected: false}, {que_options : "一道光" , selected: false}],
+    ans: "修女"
+  },
+  {
+    question_number: "4",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/compost.mp3",
+    options: [{que_options : "強烈支持" , selected: false}, {que_options : "心靈上的幫助" , selected: false}, {que_options : "具體的" , selected: false}, {que_options : "堆肥" , selected: false}],
+    ans: "堆肥"
+  },
+  {
+    question_number: "5",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/miniature.mp3",
+    options: [{que_options : "縮小模型" , selected: false}, {que_options : "磚房" , selected: false}, {que_options : "微生物" , selected: false}, {que_options : "計劃" , selected: false}],
+    ans: "縮小模型"
+  },
+  {
+    question_number: "6",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/crab.mp3",
+    options: [{que_options : "螃蟹" , selected: false}, {que_options : "餅乾" , selected: false}, {que_options : "手稿" , selected: false}, {que_options : "蟋蟀" , selected: false}],
+    ans: "螃蟹"
+  },
+  {
+    question_number: "7",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/vocabulary.mp3",
+    options: [{que_options : "詞彙" , selected: false}, {que_options : "技巧" , selected: false}, {que_options : "金錢" , selected: false}, {que_options : "槍" , selected: false}],
+    ans: "詞彙"
+  },
+  {
+    question_number: "8",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/corpse.mp3",
+    options: [{que_options : "水瓶" , selected: false}, {que_options : "手機" , selected: false}, {que_options : "貝雷帽" , selected: false}, {que_options : "屍體" , selected: false}],
+    ans: "屍體"
+  },
+  {
+    question_number: "9",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/rove.mp3",
+    options: [{que_options : "喝醉" , selected: false}, {que_options : "漫遊，流浪" , selected: false}, {que_options : "哼歌" , selected: false}, {que_options : "努力" , selected: false}],
+    ans: "漫遊，流浪"
+  },
+  {
+    question_number: "10",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/divert.mp3",
+    options: [{que_options : "改變方向" , selected: false}, {que_options : "建橋" , selected: false}, {que_options : "弄髒" , selected: false}, {que_options : "擴寬並加深" , selected: false}],
+    ans: "改變方向"
+  },
+  {
+    question_number: "11",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/trench.mp3",
+    options: [{que_options : "山" , selected: false}, {que_options : "溝渠" , selected: false}, {que_options : "垃圾" , selected: false}, {que_options : "漂亮的風景" , selected: false}],
+    ans: "溝渠"
+  },
+  {
+    question_number: "12",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/technician.mp3",
+    options: [{que_options : "魔術師" , selected: false}, {que_options : "技工" , selected: false}, {que_options : "醫生" , selected: false}, {que_options : "音樂家" , selected: false}],
+    ans: "技工"
+  },
+  {
+    question_number: "13",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/query.mp3",
+    options: [{que_options : "頭痛" , selected: false}, {que_options : "財富" , selected: false}, {que_options : "疑問" , selected: false}, {que_options : "主意" , selected: false}],
+    ans: "疑問"
+  },
+  {
+    question_number: "14",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/mug.mp3",
+    options: [{que_options : "馬克杯" , selected: false}, {que_options : "舊車" , selected: false}, {que_options : "內衣" , selected: false}, {que_options : "屋簷" , selected: false}],
+    ans: "馬克杯"
+  },
+  {
+    question_number: "15",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/static.mp3",
+    options: [{que_options : "不受歡迎的" , selected: false}, {que_options : "合法的" , selected: false}, {que_options : "流行的" , selected: false}, {que_options : "靜止不動的" , selected: false}],
+    ans: "靜止不動的"
+  },
+  {
+    question_number: "16",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/slaughter.mp3",
+    options: [{que_options : "問題" , selected: false}, {que_options : "科研" , selected: false}, {que_options : "屠殺" , selected: false}, {que_options : "體育賽事" , selected: false}],
+    ans: "屠殺"
+  },
+  {
+    question_number: "17",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/spider.mp3",
+    options: [{que_options : "疹子" , selected: false}, {que_options : "蜘蛛" , selected: false}, {que_options : "小巴" , selected: false}, {que_options : "一種魚" , selected: false}],
+    ans: "蜘蛛"
+  },
+  {
+    question_number: "18",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/circus.mp3",
+    options: [{que_options : "教堂" , selected: false}, {que_options : "馬戲團" , selected: false}, {que_options : "體育館" , selected: false}, {que_options : "合唱團" , selected: false}],
+    ans: "馬戲團"
+  },
+  {
+    question_number: "19",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/sofa.mp3",
+    options: [{que_options : "沙發" , selected: false}, {que_options : "裁斷機" , selected: false}, {que_options : "軟管" , selected: false}, {que_options : "嬰兒車" , selected: false}],
+    ans: "沙發"
+  },
+  {
+    question_number: "20",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/logo.mp3",
+    options: [{que_options : "芒果" , selected: false}, {que_options : "接待會" , selected: false}, {que_options : "標誌" , selected: false}, {que_options : "渡假屋" , selected: false}],
+    ans: "標誌"
+  },
+  {
+    question_number: "21",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/commemorate.mp3",
+    options: [{que_options : "紀念" , selected: false}, {que_options : "假裝同意" , selected: false}, {que_options : "反抗" , selected: false}, {que_options : "讚揚" , selected: false}],
+    ans: "紀念"
+  },
+  {
+    question_number: "22",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/crook.mp3",
+    options: [{que_options : "騙子" , selected: false}, {que_options : "醫護人員" , selected: false}, {que_options : "跛子" , selected: false}, {que_options : "建築師" , selected: false}],
+    ans: "騙子"
+  },
+  {
+    question_number: "23",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/volt.mp3",
+    options: [{que_options : "信封" , selected: false}, {que_options : "調味料" , selected: false}, {que_options : "伏特" , selected: false}, {que_options : "磁鐵" , selected: false}],
+    ans: "伏特"
+  },
+  {
+    question_number: "24",
+    type: questionTypes.LVLT_5000,
+    audioSrc: "vlts/audio/5k/warfare.mp3",
+    options: [{que_options : "罪" , selected: false}, {que_options : "跳舞" , selected: false}, {que_options : "戰爭" , selected: false}, {que_options : "污染" , selected: false}],
+    ans: "戰爭"
   },
   {
     question_number: "1",
@@ -828,8 +1344,8 @@ const questionList = [
     question_number: "14",
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/alternative.mp3",
-    options: [{que_options : "變通方法" , selected: false}, {que_options : "任務" , selected: false}, {que_options : "評論" , selected: false}, {que_options : "互動" , selected: false}],
-    ans: "變通方法"
+    options: [{que_options : "替代方法" , selected: false}, {que_options : "任務" , selected: false}, {que_options : "評論" , selected: false}, {que_options : "互動" , selected: false}],
+    ans: "替代方法"
   },
   {
     question_number: "15",
@@ -926,14 +1442,14 @@ const questionList = [
     question_number: "28",
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/rigid.mp3",
-    options: [{que_options : "質性的" , selected: false}, {que_options : "同時的" , selected: false}, {que_options : "暫時的" , selected: false}, {que_options : "死板的" , selected: false}],
-    ans: "死板的"
+    options: [{que_options : "質性的" , selected: false}, {que_options : "同時的" , selected: false}, {que_options : "暫時的" , selected: false}, {que_options : "頑固的" , selected: false}],
+    ans: "頑固的"
   },
   {
     question_number: "29",
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/notwithstanding.mp3",
-    options: [{que_options : "不知地" , selected: false}, {que_options : "報答" , selected: false}, {que_options : "藉以" , selected: false}, {que_options : "盡管" , selected: false}],
+    options: [{que_options : "不知地" , selected: false}, {que_options : "報答" , selected: false}, {que_options : "藉以" , selected: false}, {que_options : "儘管" , selected: false}],
     ans: "儘管"
   },
   {
