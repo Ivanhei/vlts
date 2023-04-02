@@ -1274,7 +1274,7 @@ const questionList = [
     question_number: "6.4",
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/component.mp3",
-    options: [{que_options : "架構" , selected: false}, {que_options : "層" , selected: false}, {que_options : "元素" , selected: false}, {que_options : "夥伴" , selected: false}],
+    options: [{que_options : "架構" , selected: false}, {que_options : "層" , selected: false}, {que_options : "組成部分" , selected: false}, {que_options : "夥伴" , selected: false}],
     ans: "元素"
   },
   {
