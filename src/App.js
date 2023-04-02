@@ -1386,7 +1386,7 @@ const questionList = [
     question_number: "6.20",
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/phase.mp3",
-    options: [{que_options : "系列" , selected: false}, {que_options : "階段" , selected: false}, {que_options : "面項" , selected: false}, {que_options : "範圍" , selected: false}],
+    options: [{que_options : "連續" , selected: false}, {que_options : "階段" , selected: false}, {que_options : "規模" , selected: false}, {que_options : "變數" , selected: false}],
     ans: "階段"
   },
   {
