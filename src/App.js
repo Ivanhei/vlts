@@ -980,7 +980,7 @@ const questionList = [
     question_number: "4.10",
     type: questionTypes.LVLT_4000,
     audioSrc: "vlts/audio/4k/ambition.mp3",
-    options: [{que_options : "有野心的" , selected: false}, {que_options : "有同情心的" , selected: false}, {que_options : "具想像力的" , selected: false}, {que_options : "有樂趣的" , selected: false}],
+    options: [{que_options : "野心" , selected: false}, {que_options : "同情心" , selected: false}, {que_options : "想像力" , selected: false}, {que_options : "樂趣" , selected: false}],
     ans: "有野心的"
   },
   {
