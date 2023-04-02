@@ -1372,7 +1372,7 @@ const questionList = [
     question_number: "6.18",
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/institute.mp3",
-    options: [{que_options : "獲得" , selected: false}, {que_options : "規定" , selected: false}, {que_options : "制定" , selected: false}, {que_options : "尋找" , selected: false}],
+    options: [{que_options : "獲得" , selected: false}, {que_options : "管理" , selected: false}, {que_options : "制定" , selected: false}, {que_options : "尋找" , selected: false}],
     ans: "制定"
   },
   {
