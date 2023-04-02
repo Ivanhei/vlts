@@ -981,7 +981,7 @@ const questionList = [
     type: questionTypes.LVLT_4000,
     audioSrc: "vlts/audio/4k/ambition.mp3",
     options: [{que_options : "野心" , selected: false}, {que_options : "同情心" , selected: false}, {que_options : "想像力" , selected: false}, {que_options : "樂趣" , selected: false}],
-    ans: "有野心的"
+    ans: "野心"
   },
   {
     question_number: "4.11",
@@ -1275,7 +1275,7 @@ const questionList = [
     type: questionTypes.LVLT_AWL,
     audioSrc: "vlts/audio/AWL/component.mp3",
     options: [{que_options : "架構" , selected: false}, {que_options : "層" , selected: false}, {que_options : "組成部分" , selected: false}, {que_options : "夥伴" , selected: false}],
-    ans: "元素"
+    ans: "組成部分"
   },
   {
     question_number: "6.5",
