@@ -1017,7 +1017,7 @@ const questionList = [
     audioSrc: "vlts/audio/4k/haunt.mp3",
     questionStatement: "76. haunt: The house is haunted.",
     options: [{que_options : "充滿裝飾的" , selected: false}, {que_options : "租來的" , selected: false}, {que_options : "空的" , selected: false}, {que_options : "鬧鬼的" , selected: false}, {que_options : "我不確定這題的答案" , selected: false}],
-    ans: "開車"
+    ans: "鬧鬼的"
   },
   {
     question_number: "4.5",
