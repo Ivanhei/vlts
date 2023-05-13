@@ -1113,7 +1113,7 @@ const questionList = [
     audioSrc: "vlts/audio/4k/evacuate.mp3",
     questionStatement: "88. evacuate: They were evacuated.",
     options: [{que_options : "被撤離" , selected: false}, {que_options : "被搜身" , selected: false}, {que_options : "被驚嚇" , selected: false}, {que_options : "被誣陷" , selected: false}, {que_options : "我不確定這題的答案" , selected: false}],
-    ans: "撤離"
+    ans: "被撤離"
   },
   {
     question_number: "4.17",
