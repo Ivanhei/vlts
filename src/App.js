@@ -1577,7 +1577,7 @@ const questionList = [
     audioSrc: "vlts/audio/AWL/accumulate.mp3",
     questionStatement: "146. accumulate: He accumulated many books.",
     options: [{que_options : "感激" , selected: false}, {que_options : "積累" , selected: false}, {que_options : "補充" , selected: false}, {que_options : "附和" , selected: false}, {que_options : "我不確定這題的答案" , selected: false}],
-    ans: "累積的"
+    ans: "積累"
   },
   {
     question_number: "6.27",
