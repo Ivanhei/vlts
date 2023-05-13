@@ -1465,7 +1465,7 @@ const questionList = [
     audioSrc: "vlts/audio/AWL/arbitrary.mp3",
     questionStatement: "132. arbitrary: Her decision was arbitrary.",
     options: [{que_options : "獨斷的" , selected: false}, {que_options : "關鍵的" , selected: false}, {que_options : "厲嚴的" , selected: false}, {que_options : "足夠的" , selected: false}, {que_options : "我不確定這題的答案" , selected: false}],
-    ans: "武斷的"
+    ans: "獨斷的"
   },
   {
     question_number: "6.13",
