@@ -302,8 +302,8 @@ class App extends Component {
              : // Pages DURING Test
               <div>
                 <div className="my-4">{item.type.instruction}</div>
-                {/* {item.audioSrc ? <div className="mt-4 mb-2"><AudioControl src={item.audioSrc} resetTrigger={this.state.resetTrigger}/></div> : <></>} */}
-                {item.questionStatement ? <div className="m-8">{item.questionStatement.split(" ").map((str, i) => {
+                {item.audioSrc ? <div className="mt-4 mb-2"><AudioControl src={item.audioSrc} resetTrigger={this.state.resetTrigger}/></div> : <></>}
+                {/* {item.questionStatement ? <div className="m-8">{item.questionStatement.split(" ").map((str, i) => {
                   i = i + 1
                   return (str.toLowerCase() === item.questionStatement.split(" ")[1].toLowerCase().slice(0,-1) && i > 2) ? <u>{str}</u> : 
                          (str.toLowerCase().slice(0,-1) === item.questionStatement.split(" ")[1].toLowerCase().slice(0,-1) && i > 2) ? <u>{str}</u> : 
@@ -314,7 +314,7 @@ class App extends Component {
                          (str === "scrubbing" && i > 2) ? <u>{str}</u> : 
                          (str === "roving." && i > 2) ? <u>{str}</u> : 
                          " " + str + " "
-                })}</div> : <></>}
+                })}</div> : <></>} */}
                 <div> Options are : </div>
                   {item.options.map((ans,index_ans)=>{
                     index_ans = index_ans + 1
